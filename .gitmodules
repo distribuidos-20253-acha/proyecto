@@ -1,0 +1,9 @@
+[submodule "load_manager"]
+	path = load_manager
+	url = https://github.com/distribuidos-20253-acha/load_manager
+[submodule "p_solicitante"]
+	path = p_solicitante
+	url = https://github.com/distribuidos-20253-acha/p_solicitante
+[submodule "database"]
+	path = database
+	url = https://github.com/distribuidos-20253-acha/database
