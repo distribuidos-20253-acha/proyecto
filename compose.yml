@@ -1,0 +1,18 @@
+services:
+  load_manager:
+    build:
+      context: ./load_manager
+      args:
+        LOAD_MANAGER_PORT: 3000
+    container_name: load_manager
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./load_manager/.env
+    restart: always
+  p_solicitante:
+    build:
+      context: ./p_solicitante
+    env_file:
+      - ./p_solicitante/.env
+    profiles: ["manual"]
