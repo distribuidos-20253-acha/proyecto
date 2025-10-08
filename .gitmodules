@@ -10,3 +10,9 @@
 [submodule "storage_manager"]
 	path = storage_manager
 	url = git@github.com:distribuidos-20253-acha/storage_manager.git
+[submodule "actores"]
+	path = actores
+	url = git@github.com:distribuidos-20253-acha/actores.git
+[submodule "catalog_service"]
+	path = catalog_service
+	url = https://github.com/distribuidos-20253-acha/catalog_service
