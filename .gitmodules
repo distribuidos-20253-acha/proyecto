@@ -9,10 +9,10 @@
 	url = https://github.com/distribuidos-20253-acha/database
 [submodule "storage_manager"]
 	path = storage_manager
-	url = git@github.com:distribuidos-20253-acha/storage_manager.git
+	url = https://github.com/distribuidos-20253-acha/storage_manager
 [submodule "actores"]
 	path = actores
-	url = git@github.com:distribuidos-20253-acha/actores.git
+	url = https://github.com/distribuidos-20253-acha/actores
 [submodule "catalog_service"]
 	path = catalog_service
 	url = https://github.com/distribuidos-20253-acha/catalog_service
