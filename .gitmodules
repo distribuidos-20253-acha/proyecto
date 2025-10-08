@@ -7,3 +7,6 @@
 [submodule "database"]
 	path = database
 	url = https://github.com/distribuidos-20253-acha/database
+[submodule "storage_manager"]
+	path = storage_manager
+	url = git@github.com:distribuidos-20253-acha/storage_manager.git
