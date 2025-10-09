@@ -10,12 +10,36 @@ services:
     env_file:
       - ./load_manager/.env
     restart: always
+    profiles: ["load_manager"]
   p_solicitante:
     build:
       context: ./p_solicitante
     env_file:
       - ./p_solicitante/.env
-    profiles: ["manual"]
+    profiles: ["p_solicitante"]
+  actor-renew:
+    build:
+      context: ./actores-ts
+    env_file:
+      - ./actores-ts/.env
+    command: ["-t", "renew"]
+    profiles: ["actores"]
+  actor-reserve:
+    build:
+      context: ./actores-ts
+    env_file:
+      - ./actores-ts/.env
+    command: ["-t", "reserve"]
+    ports:
+      - 3002:3002
+    profiles: ["actores"]
+  actor-return:
+    build:
+      context: ./actores-ts
+    env_file:
+      - ./actores-ts/.env
+    command: ["-t", "return"]
+    profiles: ["actores"]
   db:
     image: postgres:latest
     environment:
@@ -27,6 +51,7 @@ services:
       - db_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    profiles: ["database"]
 
 volumes:
   db_data:
