@@ -73,3 +73,11 @@ Busca una copy del libro con id `book_id` que se encuentre en la locación pasad
 |  user_id  |  string  |   uuidv7    |
 
 Devuelve un libro prestado.
+
+# Despliegue
+
+```sh
+docker-compose --profile actores up -d
+docker-compose --profile database up -d
+docker-compose --profile load_manager up -d
+```
