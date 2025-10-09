@@ -16,3 +16,6 @@
 [submodule "catalog_service"]
 	path = catalog_service
 	url = https://github.com/distribuidos-20253-acha/catalog_service
+[submodule "actores-ts"]
+	path = actores-ts
+	url = https://github.com/distribuidos-20253-acha/actores-ts
