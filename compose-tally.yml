@@ -36,13 +36,13 @@ services:
       dockerfile: Dockerfile
       args:
         - LOAD_MANAGER_HOST=tcp://0.0.0.0
-        - LOAD_MANAGER_PORT=3000
+        - LOAD_MANAGER_PORT=2999
         - ACTORS_PUB_SUB_HOST=tcp://0.0.0.0
         - ACTORS_PUB_SUB_PORT=3005
         - ACTORS_CLIENT_SERVER_HOST=tcp://host.docker.internal
         - ACTORS_CLIENT_SERVER_PORT=3002
     ports:
-      - 3000:3000
+      - 2999:2999
       - 3005:3005
     profiles: ["all", "load_manager", "sede-almacenamiento"]
     volumes:
@@ -55,7 +55,7 @@ services:
       dockerfile: Dockerfile
       args:
         - LOAD_MANAGER_HOST=tcp://host.docker.internal
-        - LOAD_MANAGER_PORT=3000
+        - LOAD_MANAGER_PORT=2999
         - SEDE=BOG
         - CATALOG_SERVICE_URL=http://host.docker.internal:3010
     profiles: ["all", "p_solicitante"]
