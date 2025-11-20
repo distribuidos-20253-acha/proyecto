@@ -19,6 +19,8 @@ services:
         - DATABASE_URL=postgres://user:password@host.docker.internal:5432/mydatabase
         - STORAGE_MANAGER_HOST=tcp://0.0.0.0
         - STORAGE_MANAGER_PORT=3033
+        - REPLICA_GA_HOST=
+        - REPLICA_GA_PORT=
     ports:
       - 3033:3033
     profiles: ["all", "storage_manager",  "sede-almacenamiento"]
