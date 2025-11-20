@@ -9,6 +9,8 @@ services:
     ports:
       - 3010:3010
     profiles: ["all", "catalog_service"]
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
   storage_manager:
     build:
       context: ./storage_manager
@@ -22,6 +24,8 @@ services:
     profiles: ["all", "storage_manager",  "sede-almacenamiento"]
     volumes:
       - ./acha-lib:/app/acha-lib:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
   load_manager:
     build:
       context: ./load_manager
@@ -39,6 +43,8 @@ services:
     profiles: ["all", "load_manager"]
     volumes:
       - ./acha-lib:/app/acha-lib:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
   p_solicitante:
     build:
       context: ./p_solicitante
@@ -50,6 +56,8 @@ services:
     profiles: ["all", "p_solicitante"]
     volumes:
       - ./acha-lib:/app/acha-lib:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
   actor-renew:
     build:
       context: ./actores-ts
@@ -65,6 +73,8 @@ services:
     profiles: ["all", "actores"]
     volumes:
       - ./acha-lib:/app/acha-lib:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
   actor-reserve:
     build:
       context: ./actores-ts
@@ -82,6 +92,8 @@ services:
     profiles: ["all", "actores"]
     volumes:
       - ./acha-lib:/app/acha-lib:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
   actor-return:
     build:
       context: ./actores-ts
@@ -97,6 +109,8 @@ services:
     profiles: ["all", "actores"]
     volumes:
       - ./acha-lib:/app/acha-lib:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
   db:
     image: postgres:17
     environment:
@@ -109,6 +123,8 @@ services:
     ports:
       - "5432:5432"
     profiles: ["all", "database", "sede-almacenamiento"]
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
   prisma-studio:
     build:
       context: ./prisma-studio
@@ -119,6 +135,8 @@ services:
     ports:
       - 5555:5555
     profiles: ["all", "prisma-studio", "sede-almacenamiento"]
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
 volumes:
   db_data:
