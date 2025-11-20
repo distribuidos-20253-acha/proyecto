@@ -19,7 +19,7 @@ services:
         - STORAGE_MANAGER_PORT=3033
     ports:
       - 3033:3033
-    profiles: ["all", "storage_manager"]
+    profiles: ["all", "storage_manager",  "sede-almacenamiento"]
     volumes:
       - ./acha-lib:/app/acha-lib:ro
   load_manager:
@@ -108,7 +108,7 @@ services:
       - db_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
-    profiles: ["all", "database"]
+    profiles: ["all", "database", "sede-almacenamiento"]
   prisma-studio:
     build:
       context: ./prisma-studio
@@ -118,7 +118,7 @@ services:
         - DATABASE_URL=postgres://user:password@host.docker.internal:5432/mydatabase
     ports:
       - 5555:5555
-    profiles: ["all", "prisma-studio"]
+    profiles: ["all", "prisma-studio", "sede-almacenamiento"]
 
 volumes:
   db_data:
