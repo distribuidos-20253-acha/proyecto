@@ -2,14 +2,11 @@ services:
   load_manager:
     build:
       context: ./load_manager
-      args:
-        LOAD_MANAGER_PORT: 3000
-    container_name: load_manager
-    ports:
-      - "3000:3000"
     env_file:
       - ./load_manager/.env
-    restart: always
+    command: ["-v"]
+    ports:
+      - 3000:3000
     profiles: ["load_manager"]
   p_solicitante:
     build:

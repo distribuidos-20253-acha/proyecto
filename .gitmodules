@@ -10,12 +10,12 @@
 [submodule "storage_manager"]
 	path = storage_manager
 	url = https://github.com/distribuidos-20253-acha/storage_manager
-[submodule "actores"]
-	path = actores
-	url = https://github.com/distribuidos-20253-acha/actores
 [submodule "catalog_service"]
 	path = catalog_service
 	url = https://github.com/distribuidos-20253-acha/catalog_service
 [submodule "actores-ts"]
 	path = actores-ts
 	url = https://github.com/distribuidos-20253-acha/actores-ts
+[submodule "acha-lib"]
+	path = acha-lib
+	url = https://github.com/distribuidos-20253-acha/acha-lib
