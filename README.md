@@ -2,7 +2,6 @@
 
 ```
 # 1. Construir la imagen
-
 docker-compose up -d
 
 # Si solo quieres esta imagen

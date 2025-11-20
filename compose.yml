@@ -1,42 +1,102 @@
 services:
+  catalog_service:
+    build:
+      context: ./catalog_service
+      dockerfile: Dockerfile
+      args:
+        - PORT=3010
+        - DATABASE_URL=postgres://user:password@host.docker.internal:5432/mydatabase
+    ports:
+      - 3010:3010
+    profiles: ["all", "catalog_service"]
+  storage_manager:
+    build:
+      context: ./storage_manager
+      dockerfile: Dockerfile
+      args:
+        - DATABASE_URL=postgres://user:password@host.docker.internal:5432/mydatabase
+        - STORAGE_MANAGER_HOST=tcp://0.0.0.0
+        - STORAGE_MANAGER_PORT=3033
+    ports:
+      - 3033:3033
+    profiles: ["all", "storage_manager"]
+    volumes:
+      - ./acha-lib:/app/acha-lib:ro
   load_manager:
     build:
       context: ./load_manager
-    env_file:
-      - ./load_manager/.env
-    command: ["-v"]
+      dockerfile: Dockerfile
+      args:
+        - LOAD_MANAGER_HOST=tcp://0.0.0.0
+        - LOAD_MANAGER_PORT=3000
+        - ACTORS_PUB_SUB_HOST=tcp://0.0.0.0
+        - ACTORS_PUB_SUB_PORT=3005
+        - ACTORS_CLIENT_SERVER_HOST=tcp://host.docker.internal
+        - ACTORS_CLIENT_SERVER_PORT=3002
     ports:
       - 3000:3000
-    profiles: ["load_manager"]
+      - 3005:3005
+    profiles: ["all", "load_manager"]
+    volumes:
+      - ./acha-lib:/app/acha-lib:ro
   p_solicitante:
     build:
       context: ./p_solicitante
-    env_file:
-      - ./p_solicitante/.env
-    profiles: ["p_solicitante"]
+      dockerfile: Dockerfile
+      args:
+        - LOAD_MANAGER_HOST=tcp://host.docker.internal
+        - LOAD_MANAGER_PORT=3000
+        - CATALOG_SERVICE_URL=http://host.docker.internal:3010
+    profiles: ["all", "p_solicitante"]
+    volumes:
+      - ./acha-lib:/app/acha-lib:ro
   actor-renew:
     build:
       context: ./actores-ts
-    env_file:
-      - ./actores-ts/.env
+      dockerfile: Dockerfile
+      args:
+        - ACTOR_LISTENING_HOST_PUBSUB=tcp://host.docker.internal
+        - ACTOR_LISTENING_PORT_PUBSUB=3005
+        - LOAD_MANAGER_HOST=tcp://0.0.0.0
+        - LOAD_MANAGER_PORT=3002
+        - STORAGE_MANAGER_HOST=tcp://host.docker.internal
+        - STORAGE_MANAGER_PORT=3033
     command: ["-t", "renew"]
-    profiles: ["actores"]
+    profiles: ["all", "actores"]
+    volumes:
+      - ./acha-lib:/app/acha-lib:ro
   actor-reserve:
     build:
       context: ./actores-ts
-    env_file:
-      - ./actores-ts/.env
+      dockerfile: Dockerfile
+      args:
+        - ACTOR_LISTENING_HOST_PUBSUB=tcp://host.docker.internal
+        - ACTOR_LISTENING_PORT_PUBSUB=3005
+        - LOAD_MANAGER_HOST=tcp://0.0.0.0
+        - LOAD_MANAGER_PORT=3002
+        - STORAGE_MANAGER_HOST=tcp://host.docker.internal
+        - STORAGE_MANAGER_PORT=3033
     command: ["-t", "reserve"]
     ports:
       - 3002:3002
-    profiles: ["actores"]
+    profiles: ["all", "actores"]
+    volumes:
+      - ./acha-lib:/app/acha-lib:ro
   actor-return:
     build:
       context: ./actores-ts
-    env_file:
-      - ./actores-ts/.env
+      dockerfile: Dockerfile
+      args:
+        - ACTOR_LISTENING_HOST_PUBSUB=tcp://host.docker.internal
+        - ACTOR_LISTENING_PORT_PUBSUB=3005
+        - LOAD_MANAGER_HOST=tcp://0.0.0.0
+        - LOAD_MANAGER_PORT=3002
+        - STORAGE_MANAGER_HOST=tcp://host.docker.internal
+        - STORAGE_MANAGER_PORT=3033
     command: ["-t", "return"]
-    profiles: ["actores"]
+    profiles: ["all", "actores"]
+    volumes:
+      - ./acha-lib:/app/acha-lib:ro
   db:
     image: postgres:latest
     environment:
@@ -48,7 +108,17 @@ services:
       - db_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
-    profiles: ["database"]
+    profiles: ["all", "database"]
+  prisma-studio:
+    build:
+      context: ./prisma-studio
+      dockerfile: Dockerfile
+      args:
+        - PORT=5555
+        - DATABASE_URL=postgres://user:password@host.docker.internal:5432/mydatabase
+    ports:
+      - 5555:5555
+    profiles: ["all", "prisma-studio"]
 
 volumes:
   db_data:

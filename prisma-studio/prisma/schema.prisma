@@ -1,0 +1,31 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Book {
+  book_id          String        @id @default(uuid()) @db.Uuid
+  total_book_count Int           @default(0)
+  book_count       Int           @default(0)
+  book_name        String        @db.Char(100)
+  book_authors     String        @db.Char(500)
+  book_description String?       @db.Char(500)
+  bookReserves     BookReserve[]
+}
+
+model BookReserve {
+  reserve_id String @id @default(uuid()) @db.Uuid
+  book_id    String @db.Uuid
+
+  created_at    DateTime @default(now())
+  updated_at    DateTime @default(now())
+  expires_at    DateTime @default(now())
+  times_renewed Int      @default(0)
+  active        Boolean  @default(true)
+  location      String
+
+  book Book @relation(fields: [book_id], references: [book_id])
+}
