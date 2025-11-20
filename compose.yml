@@ -98,7 +98,7 @@ services:
     volumes:
       - ./acha-lib:/app/acha-lib:ro
   db:
-    image: postgres:latest
+    image: postgres:17
     environment:
       POSTGRES_DB: mydatabase
       POSTGRES_USER: user
