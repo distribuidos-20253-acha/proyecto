@@ -20,4 +20,4 @@ RUN echo "DATABASE_URL=${DATABASE_URL}" > .env
 ENV PORT=${PORT}
 
 # Ejecución directa del servicio
-CMD bun x prisma studio --port $PORT
+CMD bun x prisma studio --port $PORT --browser none
