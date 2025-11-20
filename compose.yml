@@ -56,6 +56,7 @@ services:
       args:
         - LOAD_MANAGER_HOST=tcp://host.docker.internal
         - LOAD_MANAGER_PORT=3000
+        - SEDE=BOG
         - CATALOG_SERVICE_URL=http://host.docker.internal:3010
     profiles: ["all", "p_solicitante"]
     volumes:
@@ -73,6 +74,8 @@ services:
         - LOAD_MANAGER_PORT=3002
         - STORAGE_MANAGER_HOST=tcp://host.docker.internal
         - STORAGE_MANAGER_PORT=3033
+        - FALLBACK_STORAGE_MANAGER_HOST=
+        - FALLBACK_STORAGE_MANAGER_PORT=
     command: ["-t", "renew"]
     profiles: ["all", "actores"]
     volumes:
@@ -90,6 +93,8 @@ services:
         - LOAD_MANAGER_PORT=3002
         - STORAGE_MANAGER_HOST=tcp://host.docker.internal
         - STORAGE_MANAGER_PORT=3033
+        - FALLBACK_STORAGE_MANAGER_HOST=
+        - FALLBACK_STORAGE_MANAGER_PORT=
     command: ["-t", "reserve"]
     ports:
       - 3002:3002
@@ -109,6 +114,8 @@ services:
         - LOAD_MANAGER_PORT=3002
         - STORAGE_MANAGER_HOST=tcp://host.docker.internal
         - STORAGE_MANAGER_PORT=3033
+        - FALLBACK_STORAGE_MANAGER_HOST=
+        - FALLBACK_STORAGE_MANAGER_PORT=
     command: ["-t", "return"]
     profiles: ["all", "actores"]
     volumes:
