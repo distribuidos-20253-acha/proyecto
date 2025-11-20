@@ -1,21 +1,21 @@
 [submodule "load_manager"]
 	path = load_manager
-	url = https://github.com/distribuidos-20253-acha/load_manager
+	url = git@github.com:distribuidos-20253-acha/load_manager.git
 [submodule "p_solicitante"]
 	path = p_solicitante
-	url = https://github.com/distribuidos-20253-acha/p_solicitante
+	url = git@github.com:distribuidos-20253-acha/p_solicitante.git
 [submodule "database"]
 	path = database
-	url = https://github.com/distribuidos-20253-acha/database
+	url = git@github.com:distribuidos-20253-acha/database.git
 [submodule "storage_manager"]
 	path = storage_manager
-	url = https://github.com/distribuidos-20253-acha/storage_manager
+	url = git@github.com:distribuidos-20253-acha/storage_manager.git
 [submodule "catalog_service"]
 	path = catalog_service
-	url = https://github.com/distribuidos-20253-acha/catalog_service
+	url = git@github.com:distribuidos-20253-acha/catalog_service.git
 [submodule "actores-ts"]
 	path = actores-ts
-	url = https://github.com/distribuidos-20253-acha/actores-ts
+	url = git@github.com:distribuidos-20253-acha/actores-ts.git
 [submodule "acha-lib"]
 	path = acha-lib
-	url = https://github.com/distribuidos-20253-acha/acha-lib
+	url = git@github.com:distribuidos-20253-acha/acha-lib.git
