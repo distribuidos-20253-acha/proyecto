@@ -1,82 +1,21 @@
 # Uso del sistema
 
 ```
-# 1. Construir la imagen
-docker-compose up -d
+# 1. Configurar en el env las ips de los dispositivos
 
-# Si solo quieres esta imagen
-# docker build . -t p_solicitante
+# 2. Construir la libreria compartida en cada sede
+cd acha-lib
+bun i
+bun x tsc
 
-# 2. Usar
+# 2. Construir la sede deseada en cada sede (esperar a que termine y darle unos 10 segundos a que termine de prender la db)
+docker compose --f compose-main.yml --profile sede up -d
+docker compose --f compose-tally.yml --profile sede up -d
 
-docker run --rm -it p_solicitante -f         # Friendly
-docker run --rm -it p_solicitante -i <input> # Con un archivo
+#3. Crear el proceso solicitante
+cd p_solicitante
+node index.ts -f
 ```
 
-# Operaciones
-
-## Renovación (asincrona)
-
-```json
-{
-  "operation": "renew",
-  "copy_id": string,
-  "user_id": string,
-}
-```
-
-Solo se podrá renovar un libro dos veces, cada renovación aumenta una semana desdse la fecha actual, por lo que esta operación no contiene argumentos de tiempo.
-
-| parámetro |  tipo   | descripción |
-| :-------: | :-----: | :---------: |
-| operation | "renew" |             |
-|  copy_id  | string  |   uuidv7    |
-|  user_id  | string  |   uuidv7    |
-
-## Reserve (sincrona)
-
-```json
-{
-  "operation": "reserve",
-  "book_id": string,
-  "user_id": string,
-  "location": string,
-  "duration": string
-}
-```
-
-| parámetro |   tipo    |      descripción       |
-| :-------: | :-------: | :--------------------: |
-| operation | "reserve" |                        |
-|  book_id  |  string   |         uuidv7         |
-|  user_id  |  string   |         uuidv7         |
-| location  |  string   | identifier of location |
-| duration  |  string   | example: 1d , 4d , 1w  |
-
-Busca una copy del libro con id `book_id` que se encuentre en la locación pasada como parámetro `location`, al ser asíncrona, el proceso solicitante esperará el resultado de la db, de forma que si no es posible solicitar prestada una copia del libro en la locación, se mostrará un error al usuario.
-
-## Return (asíncrona)
-
-```json
-{
-  "operation": "return",
-  "copy_id": string,
-  "user_id": string,
-}
-```
-
-| parámetro |   tipo   | descripción |
-| :-------: | :------: | :---------: |
-| operation | "return" |             |
-|  copy_id  |  string  |   uuidv7    |
-|  user_id  |  string  |   uuidv7    |
-
-Devuelve un libro prestado.
-
-# Despliegue
-
-```sh
-docker-compose --profile actores up -d
-docker-compose --profile database up -d
-docker-compose --profile load_manager up -d
-```
+Cada sede tiene su propio prisma studio, este estará por defecto en el puerto 5555.
+Cada sede tiene su propio catalog service, que permite el stress testing y el buscador de libros.
