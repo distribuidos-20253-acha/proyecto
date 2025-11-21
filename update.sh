@@ -1,0 +1,1 @@
+git pull; git submodule update; docker compose -f compose-tally.yml --profile sede down -v; docker compose -f compose-tally.yml --profile sede up -d --build
