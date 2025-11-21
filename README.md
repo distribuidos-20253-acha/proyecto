@@ -1,4 +1,4 @@
-# Uso del proceso solicitante
+# Uso del sistema
 
 ```
 # 1. Construir la imagen
