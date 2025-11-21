@@ -1,3 +1,22 @@
+x-actor-common: &actor-common
+  build:
+    context: ./actores-ts
+    dockerfile: Dockerfile
+    args:
+      - ACTOR_LISTENING_HOST_PUBSUB=tcp://host.docker.internal
+      - ACTOR_LISTENING_PORT_PUBSUB=3005
+      - LOAD_MANAGER_HOST=tcp://0.0.0.0
+      - LOAD_MANAGER_PORT=3002
+      - STORAGE_MANAGER_HOST=tcp://host.docker.internal
+      - STORAGE_MANAGER_PORT=3033
+      - FALLBACK_STORAGE_MANAGER_HOST=tcp://acha-tally
+      - FALLBACK_STORAGE_MANAGER_PORT=3033
+  volumes:
+    - ./acha-lib:/app/acha-lib:ro
+  extra_hosts:
+    - "host.docker.internal:host-gateway"
+  profiles: ["all", "actores", "sede"]
+
 services:
   catalog_service:
     build:
@@ -64,64 +83,16 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
   actor-renew:
-    build:
-      context: ./actores-ts
-      dockerfile: Dockerfile
-      args:
-        - ACTOR_LISTENING_HOST_PUBSUB=tcp://host.docker.internal
-        - ACTOR_LISTENING_PORT_PUBSUB=3005
-        - LOAD_MANAGER_HOST=tcp://0.0.0.0
-        - LOAD_MANAGER_PORT=3002
-        - STORAGE_MANAGER_HOST=tcp://host.docker.internal
-        - STORAGE_MANAGER_PORT=3033
-        - FALLBACK_STORAGE_MANAGER_HOST=tcp://acha-tally
-        - FALLBACK_STORAGE_MANAGER_PORT=3033
+    <<: *actor-common
     command: ["-t", "renew"]
-    profiles: ["all", "actores", "sede"]
-    volumes:
-      - ./acha-lib:/app/acha-lib:ro
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
   actor-reserve:
-    build:
-      context: ./actores-ts
-      dockerfile: Dockerfile
-      args:
-        - ACTOR_LISTENING_HOST_PUBSUB=tcp://host.docker.internal
-        - ACTOR_LISTENING_PORT_PUBSUB=3005
-        - LOAD_MANAGER_HOST=tcp://0.0.0.0
-        - LOAD_MANAGER_PORT=3002
-        - STORAGE_MANAGER_HOST=tcp://host.docker.internal
-        - STORAGE_MANAGER_PORT=3033
-        - FALLBACK_STORAGE_MANAGER_HOST=tcp://acha-tally
-        - FALLBACK_STORAGE_MANAGER_PORT=3033
+    <<: *actor-common
     command: ["-t", "reserve"]
     ports:
       - 3002:3002
-    profiles: ["all", "actores", "sede"]
-    volumes:
-      - ./acha-lib:/app/acha-lib:ro
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
   actor-return:
-    build:
-      context: ./actores-ts
-      dockerfile: Dockerfile
-      args:
-        - ACTOR_LISTENING_HOST_PUBSUB=tcp://host.docker.internal
-        - ACTOR_LISTENING_PORT_PUBSUB=3005
-        - LOAD_MANAGER_HOST=tcp://0.0.0.0
-        - LOAD_MANAGER_PORT=3002
-        - STORAGE_MANAGER_HOST=tcp://host.docker.internal
-        - STORAGE_MANAGER_PORT=3033
-        - FALLBACK_STORAGE_MANAGER_HOST=tcp://acha-tally
-        - FALLBACK_STORAGE_MANAGER_PORT=3033
+    <<: *actor-common
     command: ["-t", "return"]
-    profiles: ["all", "actores", "sede"]
-    volumes:
-      - ./acha-lib:/app/acha-lib:ro
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
   db:
     image: postgres:17
     environment:
